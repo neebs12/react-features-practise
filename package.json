@@ -38,7 +38,9 @@
     ]
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "file-loader": "^6.2.0",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.6",
