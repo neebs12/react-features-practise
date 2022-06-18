@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import useSound from 'use-sound'
+import Placeholder from './Placeholder'
+import Sound from './Sound'
+import ReRenderingFromProp from './ReRenderingFromProp'
 
-import tune from '../sounds/but-tweet.mp3'
 
 const App = () => {
-  const [count, setCount] = useState(0)
-  // let ownTune = new Audio(tune)
+  let [count, setCount] = useState(0)
+  console.log('Parent Rendering')
 
-  const [play] = useSound(tune)
+  const increment = () => setCount(count + 1)
+  const pseudoIncrement = () => {
+    count = count + 1 
+  }
 
   return (
     <div>
       <h1>Count: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Click me!</button>
-      <button onClick={play}>Play the tune</button>
+      <button onClick={increment}>Click me!</button>
+      <button onClick={pseudoIncrement}>Changing state variable directly does not invoke App re-render, Click Me!</button>
+
+      <ReRenderingFromProp count={count} />
+
       <Routes>
-        <Route path='/test' element={<h1>TEST ROUTE</h1>} />
+        <Route path='/' element={<Placeholder />}/>
+        <Route path='/sound' element={<Sound />} />
       </Routes>
     </div>
   )
