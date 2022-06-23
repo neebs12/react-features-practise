@@ -1,6 +1,8 @@
 import React from 'react'
 
-const IMAGE_SIDE_COUNT = 9 // 3 * 3 = 9 images
+import SingleImage from './SingleImage'
+
+const IMAGE_SIDE_COUNT = 9 // n * n images
 const PERMISSIBLE_WINDOW_PX = 500
 const IMAGE_RESIZE_PX = Math.floor(PERMISSIBLE_WINDOW_PX / IMAGE_SIDE_COUNT) // lmao
 
@@ -21,7 +23,7 @@ function Images() {
                          .fill(`${IMAGE_RESIZE_PX}px`)
                          .join(' ') 
 
-  const containerStyle = { // LMAO
+  const gridStyle = { // LMAO
     display: 'grid',
     gridTemplateColumns: gridTemplate,
     gridTemplateRows: gridTemplate,
@@ -31,17 +33,43 @@ function Images() {
     // will be passed to a map but will be ignored
     const randInd = Math.floor(Math.random() * HEX_ARRAY.length)
     const randHex = HEX_ARRAY[randInd]
-    const constructURL = `${TEST_URL}/${IMAGE_SIZE_PX}/${randHex}`
+
     return (
-      <img key={ind} style={imageStyle} src={constructURL}/>
+      <SingleImage 
+        key={ind} 
+        domainUrl={TEST_URL}
+        pxSize={IMAGE_SIZE_PX}
+        hexColor={randHex}
+        hexColorArray={HEX_ARRAY}
+        style={imageStyle}
+      />
     )
+
+    // const constructURL = `${TEST_URL}/${IMAGE_SIZE_PX}/${randHex}`
+    // return (
+    //   <img key={ind} style={imageStyle} src={constructURL}/>
+    // )
   }
+
+  // so we want to wrap the images with two other divs in the same container
+
+  const flexStyle = {
+    display: 'flex',
+    justifyContent: 'space-evenly'
+  }
+
+  // say we want to change a specific image in the collection by clicking on it (be clever!)
+  // instead of using states, use local target technique
 
   return (
     <>
       <h1>These are the images</h1>
-      <div style={containerStyle} className="images">
-        {[...new Array(IMAGE_SIDE_COUNT ** 2)].map(randomImages)}
+      <div className="flex-container" style={flexStyle}>
+        <div className="random-space"></div>
+        <div className="images" style={gridStyle} >
+          {[...new Array(IMAGE_SIDE_COUNT ** 2)].map(randomImages)}
+        </div>
+        <div className="random-space"></div>
       </div>
     </>
   )
