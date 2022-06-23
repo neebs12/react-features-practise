@@ -13,7 +13,7 @@ function SingleImage(props) {
 
   const url = `${props.domainUrl}/${props.pxSize}/${color || 'FFFFFF'}`
   
-  const handleClick = () => {
+  const handleEvent = () => {
     const randInd = Math.floor(Math.random() * props.hexColorArray.length)
     const randHex =  props.hexColorArray[randInd]
     setColor(randHex)
@@ -23,7 +23,7 @@ function SingleImage(props) {
     <img 
       style={props.style}
       src={url}
-      onClick={handleClick}
+      onMouseOver={handleEvent}
     />
   )
 }
