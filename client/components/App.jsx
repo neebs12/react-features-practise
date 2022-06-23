@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
+import Images from './Images'
 import Placeholder from './Placeholder'
 import Sound from './Sound'
 import ReRenderingFromProp from './ReRenderingFromProp'
@@ -26,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Placeholder />}/>
         <Route path='/sound' element={<Sound />} />
+        <Route path='/images' element={<Images />} />
       </Routes>
     </div>
   )
