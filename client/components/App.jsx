@@ -1,35 +1,62 @@
 import React, { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
 
-import Images from './Images'
-import Placeholder from './Placeholder'
-import Sound from './Sound'
-import ReRenderingFromProp from './ReRenderingFromProp'
+const useField = (type) => {
+  const [value, setValue] = useState('')
+  const onChange = (e) => {
+    setValue(e.target.value)
+  }
 
+  return {
+    type,
+    value,
+    onChange
+  }
+}
 
 const App = () => {
-  let [count, setCount] = useState(0)
-  console.log('Parent Rendering')
+  const name = useField('text')
+  const date = useField('date')
+  const height = useField('number')
+  const ethnicity = useField('text')
 
-  const increment = () => setCount(count + 1)
-  const pseudoIncrement = () => {
-    count = count + 1 
+  const [isSubmitting, setIsSubmitting] = useState(false) // <--- init state
+  const [toggleShow, setToggleShow] = useState(false) // <-- initially hidden
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault()
+    // submit to the server?
+    if (!isSubmitting) return false
+
+    console.log(`name: ${name.value}, date: ${date.value}` + 
+      (toggleShow ? `\n height: ${height.value}, ethnicity: ${ethnicity.value}`: ``)
+    )
+  }
+
+  const extraFields = () => {
+    // add your extra field here
+    return (
+      <>
+        height: <input {...height} /><br />
+        ethnicity: <input {...ethnicity} /><br />
+      </>
+    )
   }
 
   return (
-    <div>
-      <h1>Count: {count}</h1>
-      <button onClick={increment}>Click me!</button>
-      <button onClick={pseudoIncrement}>Changing state variable directly does not invoke App re-render, Click Me!</button>
-
-      <ReRenderingFromProp count={count} />
-
-      <Routes>
-        <Route path='/' element={<Placeholder />}/>
-        <Route path='/sound' element={<Sound />} />
-        <Route path='/images' element={<Images />} />
-      </Routes>
-    </div>
+    <form onSubmit={handleOnSubmit}>
+      name: <input {...name} /><br />
+      date: <input {...date} /><br />
+      {toggleShow && extraFields()} 
+      <button onClick={() => {
+        setToggleShow(s => !s)
+        setIsSubmitting(false)
+      }}>
+        {toggleShow ? "hide extra" : "show extra"}
+      </button><br />
+      <button type="submit" onClick={() => setIsSubmitting(true)}>
+        submit
+      </button>
+    </form>
   )
 }
 
