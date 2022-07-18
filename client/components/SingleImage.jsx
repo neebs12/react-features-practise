@@ -19,6 +19,8 @@ function SingleImage(props) {
     setColor(randHex)
   }
 
+  
+
   return (
     <img 
       style={props.style}

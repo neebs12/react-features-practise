@@ -2,7 +2,7 @@ import React from 'react'
 
 import SingleImage from './SingleImage'
 
-const IMAGE_SIDE_COUNT = 9 // n * n images
+const IMAGE_SIDE_COUNT = 4 // n * n images
 const PERMISSIBLE_WINDOW_PX = 500
 const IMAGE_RESIZE_PX = Math.floor(PERMISSIBLE_WINDOW_PX / IMAGE_SIDE_COUNT) // lmao
 
@@ -21,7 +21,7 @@ function Images() {
 
   const gridTemplate = Array(IMAGE_SIDE_COUNT)
                          .fill(`${IMAGE_RESIZE_PX}px`)
-                         .join(' ') 
+                         .join(' ') // '100px 100px ...'
 
   const gridStyle = { // LMAO
     display: 'grid',
@@ -32,7 +32,7 @@ function Images() {
   const randomImages = (_, ind) => {
     // will be passed to a map but will be ignored
     const randInd = Math.floor(Math.random() * HEX_ARRAY.length)
-    const randHex = HEX_ARRAY[randInd]
+    const randHex = HEX_ARRAY[randInd] // random hex/color for each time randomImages is run
 
     return (
       <SingleImage 
@@ -44,11 +44,6 @@ function Images() {
         style={imageStyle}
       />
     )
-
-    // const constructURL = `${TEST_URL}/${IMAGE_SIZE_PX}/${randHex}`
-    // return (
-    //   <img key={ind} style={imageStyle} src={constructURL}/>
-    // )
   }
 
   // so we want to wrap the images with two other divs in the same container
